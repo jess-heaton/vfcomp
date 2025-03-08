@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Trigger Outbound Call</title>
+  <title>Make.com Outbound Call Trigger</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
   </style>
 </head>
 <body>
-  <h1>Outbound Call Trigger</h1>
+  <h1>Make.com Outbound Call Trigger</h1>
   <p>Enter your phone number in international format (e.g., +447700900123 or +1234567890):</p>
   
   <form id="callForm">
@@ -28,41 +28,27 @@
   
   <script>
     document.getElementById('callForm').addEventListener('submit', function(e) {
-      e.preventDefault();  // Prevent the default form submission
-      
+      e.preventDefault();
       const phoneNumber = document.getElementById('phoneNumber').value;
       
-      // Replace 'YOUR_DM_API_KEY' with your actual DM API Key
-      const API_KEY = 'VF.DM.67cc7692eb11ca5e21070454.RIjVcP9IqbnGNoYg';
-      
-      // The Voiceflow outbound API endpoint with your Phone Number ID
-      const apiUrl = 'https://runtime-api.voiceflow.com/v1alpha1/phone-number/67cb6ae4a1fce6a08fd62a95/outbound';
-      
-      // Make the POST request
-      fetch(apiUrl, {
+      // Replace <YOUR_MAKE_WEBHOOK_URL> with the Custom Webhook URL from Make.com
+      fetch('<YOUR_MAKE_WEBHOOK_URL>', {
         method: 'POST',
         headers: {
-          'Authorization': API_KEY,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          "to": phoneNumber,
-          "variables": {}  // Add any additional Voiceflow variables if needed
-        })
+        body: JSON.stringify({ phoneNumber: phoneNumber })
       })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network error: ' + response.statusText);
-        }
-        return response.json();
+        // Make.com might return a simple 200 text response, so let's use .text() here
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
       })
       .then(data => {
-        document.getElementById('result').innerText = 'Call triggered successfully!';
-        console.log(data);
+        document.getElementById('result').innerText = 'Request sent to Make.com! Check your scenario logs.';
       })
       .catch(error => {
         document.getElementById('result').innerText = 'Error: ' + error.message;
-        console.error(error);
       });
     });
   </script>
