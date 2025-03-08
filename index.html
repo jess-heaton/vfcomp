@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trigger Outbound Call</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+    label, input, button {
+      display: block;
+      margin: 0.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Outbound Call Trigger</h1>
+  <p>Enter your phone number in international format (e.g., +447700900123 or +1234567890):</p>
+  
+  <form id="callForm">
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="+1234567890" required>
+    <button type="submit">Call Now</button>
+  </form>
+  
+  <div id="result"></div>
+  
+  <script>
+    document.getElementById('callForm').addEventListener('submit', function(e) {
+      e.preventDefault();  // Prevent the default form submission
+      
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      
+      // Replace 'YOUR_DM_API_KEY' with your actual DM API Key
+      const API_KEY = 'YOUR_DM_API_KEY';
+      
+      // The Voiceflow outbound API endpoint with your Phone Number ID
+      const apiUrl = 'https://runtime-api.voiceflow.com/v1alpha1/phone-number/67cb6ae4a1fce6a08fd62a95/outbound';
+      
+      // Make the POST request
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "to": phoneNumber,
+          "variables": {}  // Add any additional Voiceflow variables if needed
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network error: ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        document.getElementById('result').innerText = 'Call triggered successfully!';
+        console.log(data);
+      })
+      .catch(error => {
+        document.getElementById('result').innerText = 'Error: ' + error.message;
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
