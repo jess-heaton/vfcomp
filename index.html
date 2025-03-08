@@ -7,42 +7,157 @@
     body {
       font-family: Arial, sans-serif;
       margin: 2em;
+      max-width: 600px;
     }
     label, input, button {
       display: block;
       margin: 0.5em 0;
     }
+    h3 {
+      margin-top: 1em;
+    }
   </style>
 </head>
 <body>
   <h1>Make.com Outbound Call Trigger</h1>
-  <p>Enter your phone number in international format (e.g., +447700900123 or +1234567890):</p>
+  <p>Please enter your details below:</p>
   
   <form id="callForm">
+    <!-- Name -->
+    <label for="name">Name:</label>
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      placeholder="John Doe" 
+      required
+    >
+
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input 
+      type="email" 
+      id="email" 
+      name="email" 
+      placeholder="john@example.com" 
+      required
+    >
+
+    <!-- Phone Number -->
     <label for="phoneNumber">Phone Number:</label>
-    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="+1234567890" required>
-    <button type="submit">Call Now</button>
+    <input 
+      type="text" 
+      id="phoneNumber" 
+      name="phoneNumber" 
+      placeholder="+1234567890" 
+      required
+    >
+
+    <!-- Address Section -->
+    <h3>Address</h3>
+
+    <label for="address1">Address Line 1 (required):</label>
+    <input 
+      type="text" 
+      id="address1" 
+      name="address1" 
+      placeholder="123 Main St" 
+      required
+    >
+
+    <label for="address2">Address Line 2 (optional):</label>
+    <input 
+      type="text" 
+      id="address2" 
+      name="address2" 
+      placeholder="Apt 4B"
+    >
+
+    <label for="city">City (optional but recommended):</label>
+    <input 
+      type="text" 
+      id="city" 
+      name="city" 
+      placeholder="New York"
+    >
+
+    <label for="state">State (two-letter code, optional):</label>
+    <input 
+      type="text" 
+      id="state" 
+      name="state" 
+      placeholder="NY"
+    >
+
+    <label for="zipcode">Zip Code (required):</label>
+    <input 
+      type="text" 
+      id="zipcode" 
+      name="zipcode" 
+      placeholder="10001" 
+      required
+    >
+
+    <label for="country">Country (ISO Alpha-2, e.g., US, GB, CA):</label>
+    <input 
+      type="text" 
+      id="country" 
+      name="country" 
+      placeholder="US"
+    >
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
   </form>
   
-  <div id="result"></div>
+  <div id="result" style="margin-top: 1em;"></div>
   
   <script>
     document.getElementById('callForm').addEventListener('submit', function(e) {
       e.preventDefault();
+
+      // Gather form field values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
       const phoneNumber = document.getElementById('phoneNumber').value;
-      
-      // Replace <YOUR_MAKE_WEBHOOK_URL> with the Custom Webhook URL from Make.com
-      fetch('https://hook.eu2.make.com/1ghu20spiyh2lsfmbruuvp3fq1quca71', {
+      const address1 = document.getElementById('address1').value;
+      const address2 = document.getElementById('address2').value;
+      const city = document.getElementById('city').value;
+      const state = document.getElementById('state').value;
+      const zipcode = document.getElementById('zipcode').value;
+      const country = document.getElementById('country').value;
+
+      // Replace with your Make.com Webhook URL
+      const makeWebhookURL = 'https://hook.eu2.make.com/1ghu20spiyh2lsfmbruuvp3fq1quca71';
+
+      // Build the request body
+      const requestBody = {
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        address: {
+          address1: address1,
+          address2: address2,
+          city: city,
+          state: state,
+          zipcode: zipcode,
+          country: country
+        }
+      };
+
+      // Send data to Make.com
+      fetch(makeWebhookURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ phoneNumber: phoneNumber })
+        body: JSON.stringify(requestBody)
       })
       .then(response => {
-        // Make.com might return a simple 200 text response, so let's use .text() here
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.text();
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text(); // Make.com often returns plain text or a simple JSON
       })
       .then(data => {
         document.getElementById('result').innerText = 'Request sent to Make.com! Check your scenario logs.';
