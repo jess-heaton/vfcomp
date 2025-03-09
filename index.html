@@ -2,120 +2,183 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Make.com Outbound Call Trigger</title>
+  <title>Contact Us - Real Estate Inquiries</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 2em;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background: #fff;
       max-width: 600px;
+      margin: 50px auto;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    label, input, button {
+    h1 {
+      margin-bottom: 0.5em;
+      font-size: 24px;
+    }
+    p {
+      margin-bottom: 1.5em;
+      color: #555;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 1em;
       display: block;
-      margin: 0.5em 0;
     }
-    h3 {
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 0.8em;
+      margin-top: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 0.5em;
+    }
+    button {
+      margin-top: 1.5em;
+      padding: 0.8em 1.5em;
+      background: #007BFF;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .address-section {
+      margin-top: 1.5em;
+      border-top: 1px solid #eee;
+      padding-top: 1em;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
       margin-top: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>Make.com Outbound Call Trigger</h1>
-  <p>Please enter your details below:</p>
-  
-  <form id="callForm">
-    <!-- Name -->
-    <label for="name">Name:</label>
-    <input 
-      type="text" 
-      id="name" 
-      name="name" 
-      placeholder="John Doe" 
-      required
-    >
-
-    <!-- Email -->
-    <label for="email">Email:</label>
-    <input 
-      type="email" 
-      id="email" 
-      name="email" 
-      placeholder="john@example.com" 
-      required
-    >
-
-    <!-- Phone Number -->
-    <label for="phoneNumber">Phone Number:</label>
-    <input 
-      type="text" 
-      id="phoneNumber" 
-      name="phoneNumber" 
-      placeholder="+1234567890" 
-      required
-    >
-
-    <!-- Address Section -->
-    <h3>Address</h3>
-
-    <label for="address1">Address Line 1 (required):</label>
-    <input 
-      type="text" 
-      id="address1" 
-      name="address1" 
-      placeholder="123 Main St" 
-      required
-    >
-
-    <label for="address2">Address Line 2 (optional):</label>
-    <input 
-      type="text" 
-      id="address2" 
-      name="address2" 
-      placeholder="Apt 4B"
-    >
-
-    <label for="city">City (optional but recommended):</label>
-    <input 
-      type="text" 
-      id="city" 
-      name="city" 
-      placeholder="New York"
-    >
-
-    <label for="state">State (two-letter code, optional):</label>
-    <input 
-      type="text" 
-      id="state" 
-      name="state" 
-      placeholder="NY"
-    >
-
-    <label for="zipcode">Zip Code (required):</label>
-    <input 
-      type="text" 
-      id="zipcode" 
-      name="zipcode" 
-      placeholder="10001" 
-      required
-    >
-
-    <label for="country">Country (ISO Alpha-2, e.g., US, GB, CA):</label>
-    <input 
-      type="text" 
-      id="country" 
-      name="country" 
-      placeholder="US"
-    >
-
-    <!-- Submit Button -->
-    <button type="submit">Submit</button>
-  </form>
-  
-  <div id="result" style="margin-top: 1em;"></div>
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you. Please fill in your details below and let us know how we can assist with your property needs.</p>
+    <form id="callForm">
+      <!-- Name -->
+      <label for="name">Name:</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        placeholder="John Doe" 
+        required
+      >
+      
+      <!-- Email -->
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        placeholder="john@example.com" 
+        required
+      >
+      
+      <!-- Phone Number -->
+      <label for="phoneNumber">Phone Number:</label>
+      <input 
+        type="text" 
+        id="phoneNumber" 
+        name="phoneNumber" 
+        placeholder="+1234567890" 
+        required
+      >
+      
+      <!-- Property Interest Checkbox -->
+      <div class="checkbox-group">
+        <input 
+          type="checkbox" 
+          id="buyingCheckbox" 
+          name="buyingCheckbox"
+        >
+        <label for="buyingCheckbox" style="display: inline; font-weight: normal;">Tick if you are looking to Buy (leave unticked if looking to Sell)</label>
+      </div>
+      
+      <!-- Address Section -->
+      <div class="address-section">
+        <h3>Property Address</h3>
+        <label for="address1">Address Line 1 (required):</label>
+        <input 
+          type="text" 
+          id="address1" 
+          name="address1" 
+          placeholder="123 Main St" 
+          required
+        >
+        
+        <label for="address2">Address Line 2 (optional):</label>
+        <input 
+          type="text" 
+          id="address2" 
+          name="address2" 
+          placeholder="Apt 4B"
+        >
+        
+        <label for="city">City (optional but recommended):</label>
+        <input 
+          type="text" 
+          id="city" 
+          name="city" 
+          placeholder="London"
+        >
+        
+        <label for="state">County (optional):</label>
+        <input 
+          type="text" 
+          id="state" 
+          name="state" 
+          placeholder="Greater London"
+        >
+        
+        <label for="zipcode">Postcode (required):</label>
+        <input 
+          type="text" 
+          id="zipcode" 
+          name="zipcode" 
+          placeholder="SW1A 1AA" 
+          required
+        >
+        
+        <label for="country">Country (ISO Alpha-2, e.g., US, GB, CA):</label>
+        <input 
+          type="text" 
+          id="country" 
+          name="country" 
+          placeholder="GB"
+        >
+      </div>
+      
+      <!-- Submit Button -->
+      <button type="submit">Submit</button>
+    </form>
+    
+    <div id="result" style="margin-top: 1em; color: #333;"></div>
+  </div>
   
   <script>
     document.getElementById('callForm').addEventListener('submit', function(e) {
       e.preventDefault();
-
+  
       // Gather form field values
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
@@ -126,15 +189,19 @@
       const state = document.getElementById('state').value;
       const zipcode = document.getElementById('zipcode').value;
       const country = document.getElementById('country').value;
-
+  
+      // New property interest field: true if buying, false if selling
+      const isBuying = document.getElementById('buyingCheckbox').checked;
+  
       // Replace with your Make.com Webhook URL
       const makeWebhookURL = 'https://hook.eu2.make.com/1ghu20spiyh2lsfmbruuvp3fq1quca71';
-
+  
       // Build the request body
       const requestBody = {
         name: name,
         email: email,
         phoneNumber: phoneNumber,
+        isBuying: isBuying,
         address: {
           address1: address1,
           address2: address2,
@@ -144,7 +211,7 @@
           country: country
         }
       };
-
+  
       // Send data to Make.com
       fetch(makeWebhookURL, {
         method: 'POST',
@@ -157,7 +224,7 @@
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.text(); // Make.com often returns plain text or a simple JSON
+        return response.text();
       })
       .then(data => {
         document.getElementById('result').innerText = 'Request sent to Make.com! Check your scenario logs.';
